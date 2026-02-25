@@ -60,26 +60,13 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             (POST_TWO_COLS ? '2xl:p-3 2xl:h-36 2xl:w-full' : '') +
             ' flex p-4  flex-col justify-between h-44 md:h-full w-full md:w-7/12'
           }>
+          {/* 标题 */}
           <header>
-            {/* 分类 */}
-            {post?.category && (
-              <div
-                className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
-                <SmartLink
-                  passHref
-                  href={`/category/${post.category}`}
-                  className='cursor-pointer text-xs font-normal menu-link '>
-                  {post.category}
-                </SmartLink>
-              </div>
-            )}
-
-            {/* 标题和图标 */}
             <SmartLink
               href={post?.href}
               passHref
               className={
-                ' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-lg font-extrabold leading-tight'
+                ' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-lg font-extrabold leading-snug'
               }>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon
@@ -93,33 +80,31 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && (
-            <main className='line-clamp-2 replace text-gray-700  dark:text-gray-300 text-xs font-light leading-tight'>
+            <main className='mt-1.5 line-clamp-2 replace text-gray-700 dark:text-gray-300 text-xs font-light leading-normal'>
               {post.summary}
             </main>
           )}
 
-          {/* 日期、字数、阅读时间 */}
-          <div className='flex items-center text-xs text-gray-400 dark:text-gray-500 gap-3'>
+          {/* 日期 + 分类 */}
+          <div className='flex items-center justify-between text-xs text-gray-400 dark:text-gray-500'>
             {post?.publishDay && (
               <span className='flex items-center gap-1'>
-                <i className='fa-regular fa-calendar' />
+                <i className='fa-regular fa-clock' />
                 {post.publishDay}
               </span>
             )}
-            {post?.wordCount > 0 && (
-              <span className='flex items-center gap-1'>
-                <i className='fa-regular fa-file-word' />
-                {post.wordCount}字
-              </span>
-            )}
-            {post?.readTime > 0 && (
-              <span className='flex items-center gap-1'>
-                <i className='fa-regular fa-clock' />
-                {post.readTime}分钟
-              </span>
+            {post?.category && (
+              <SmartLink
+                passHref
+                href={`/category/${post.category}`}
+                className='flex items-center gap-1 cursor-pointer hover:text-indigo-700 dark:hover:text-yellow-500'>
+                <i className='fa-regular fa-folder-open' />
+                {post.category}
+              </SmartLink>
             )}
           </div>
 
+          {/* 标签 */}
           <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
             <div>
               {' '}
