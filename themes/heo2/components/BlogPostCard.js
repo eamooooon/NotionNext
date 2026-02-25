@@ -85,6 +85,16 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             </main>
           )}
 
+          {/* 标签 */}
+          <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
+            <div>
+              {' '}
+              {post.tagItems?.map(tag => (
+                <TagItemMini key={tag.name} tag={tag} />
+              ))}
+            </div>
+          </div>
+
           {/* 日期 + 分类 */}
           <div className='flex items-center justify-between text-xs text-gray-400 dark:text-gray-500'>
             {post?.publishDay && (
@@ -102,16 +112,6 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 {post.category}
               </SmartLink>
             )}
-          </div>
-
-          {/* 标签 */}
-          <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
-            <div>
-              {' '}
-              {post.tagItems?.map(tag => (
-                <TagItemMini key={tag.name} tag={tag} />
-              ))}
-            </div>
           </div>
         </div>
       </div>

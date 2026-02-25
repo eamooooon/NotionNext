@@ -43,24 +43,6 @@ export default function CategoryBar(props) {
           <MenuItem key={index} href={`/category/${c.name}`} name={c.name} />
         ))}
       </div>
-
-      <div id='category-bar-next' className='flex items-center justify-center'>
-        <div
-          id='right'
-          className='cursor-pointer mx-2 dark:text-gray-300 dark:hover:text-yellow-600 hover:text-indigo-600'
-          onClick={handleToggleScroll}>
-          {scrollRight ? (
-            <ChevronDoubleLeft className={'w-5 h-5'} />
-          ) : (
-            <ChevronDoubleRight className={'w-5 h-5'} />
-          )}
-        </div>
-        <SmartLink
-          href='/category'
-          className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-yellow-600'>
-          {locale.MENU.CATEGORY}
-        </SmartLink>
-      </div>
     </div>
   )
 }
@@ -74,12 +56,34 @@ const MenuItem = ({ href, name }) => {
   const router = useRouter()
   const asPath = router.asPath
   const isOnCategoryPage = asPath.startsWith('/category/')
-  // 在分类页上匹配对应分类；在首页或其他页面（如标签页）时"全部"高亮
-  const selected = href === '/'
-    ? !isOnCategoryPage
-    : asPath.startsWith(`/category/${encodeURIComponent(name)}`)
+
+  // 在分类页时保存当前选中的分类
+  if (isOnCategoryPage && typeof window !== 'undefined') {
+    const currentCat = decodeURIComponent(asPath.replace('/category/', '').split('/')[0].split('?')[0])
+    sessionStorage.setItem('selectedCategory', currentCat)
+  }
+
+  let selected = false
+  if (isOnCategoryPage) {
+    // 在分类页上直接匹配
+    selected = href === '/'
+      ? false
+      : asPath.startsWith(`/category/${encodeURIComponent(name)}`)
+  } else {
+    // 不在分类页时，读取记忆的选中分类
+    const savedCat = typeof window !== 'undefined' ? sessionStorage.getItem('selectedCategory') : null
+    selected = href === '/'
+      ? !savedCat
+      : savedCat === name
+  }
+
   return (
     <div
+      onClick={() => {
+        if (href === '/') {
+          sessionStorage.removeItem('selectedCategory')
+        }
+      }}
       className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
       <SmartLink href={href}>{name}</SmartLink>
     </div>

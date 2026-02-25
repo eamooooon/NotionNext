@@ -43,24 +43,6 @@ export default function TagBar(props) {
                     <TagMenuItem key={index} href={`/tag/${encodeURIComponent(t.name)}`} name={t.name} />
                 ))}
             </div>
-
-            <div id='tag-bar-next' className='flex items-center justify-center'>
-                <div
-                    id='tag-right'
-                    className='cursor-pointer mx-2 dark:text-gray-300 dark:hover:text-yellow-600 hover:text-indigo-600'
-                    onClick={handleToggleScroll}>
-                    {scrollRight ? (
-                        <ChevronDoubleLeft className={'w-5 h-5'} />
-                    ) : (
-                        <ChevronDoubleRight className={'w-5 h-5'} />
-                    )}
-                </div>
-                <SmartLink
-                    href='/tag'
-                    className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-yellow-600'>
-                    {locale.COMMON.TAGS}
-                </SmartLink>
-            </div>
         </div>
     )
 }
@@ -69,11 +51,32 @@ const TagMenuItem = ({ href, name }) => {
     const router = useRouter()
     const asPath = router.asPath
     const isOnTagPage = asPath.startsWith('/tag/')
-    const selected = href === '/'
-        ? !isOnTagPage
-        : asPath.startsWith(`/tag/${encodeURIComponent(name)}`)
+
+    // 在标签页时保存当前选中的标签
+    if (isOnTagPage && typeof window !== 'undefined') {
+        const currentTag = decodeURIComponent(asPath.replace('/tag/', '').split('/')[0].split('?')[0])
+        sessionStorage.setItem('selectedTag', currentTag)
+    }
+
+    let selected = false
+    if (isOnTagPage) {
+        selected = href === '/'
+            ? false
+            : asPath.startsWith(`/tag/${encodeURIComponent(name)}`)
+    } else {
+        const savedTag = typeof window !== 'undefined' ? sessionStorage.getItem('selectedTag') : null
+        selected = href === '/'
+            ? !savedTag
+            : savedTag === name
+    }
+
     return (
         <div
+            onClick={() => {
+                if (href === '/') {
+                    sessionStorage.removeItem('selectedTag')
+                }
+            }}
             className={`whitespace-nowrap mr-2 duration-200 transition-all text-sm font-bold px-2 py-0.5 rounded-md text-gray-600 dark:text-gray-300 hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
             <SmartLink href={href}>{name}</SmartLink>
         </div>
