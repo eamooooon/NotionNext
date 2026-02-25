@@ -38,7 +38,7 @@ export default function CategoryBar(props) {
         id='category-bar-items'
         ref={categoryBarItemsRef}
         className='scroll-smooth max-w-4xl rounded-lg scroll-hidden flex justify-start flex-nowrap items-center overflow-x-scroll'>
-        <MenuItem href='/' name={locale.NAV.INDEX} />
+        <MenuItem href='/' name='全部' />
         {categoryOptions?.map((c, index) => (
           <MenuItem key={index} href={`/category/${c.name}`} name={c.name} />
         ))}
@@ -73,10 +73,10 @@ export default function CategoryBar(props) {
 const MenuItem = ({ href, name }) => {
   const router = useRouter()
   const { category } = router.query
-  const selected = category === name
+  const selected = href === '/' ? !category : category === name
   return (
     <div
-      className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-indigo-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-indigo-600 dark:bg-yellow-600' : ''}`}>
+      className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
       <SmartLink href={href}>{name}</SmartLink>
     </div>
   )

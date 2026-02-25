@@ -38,6 +38,7 @@ export default function TagBar(props) {
                 id='tag-bar-items'
                 ref={tagBarItemsRef}
                 className='scroll-smooth max-w-4xl rounded-lg scroll-hidden flex justify-start flex-nowrap items-center overflow-x-scroll'>
+                <TagMenuItem href='/' name='全部' />
                 {tagOptions?.map((t, index) => (
                     <TagMenuItem key={index} href={`/tag/${encodeURIComponent(t.name)}`} name={t.name} />
                 ))}
@@ -67,10 +68,10 @@ export default function TagBar(props) {
 const TagMenuItem = ({ href, name }) => {
     const router = useRouter()
     const { tag } = router.query
-    const selected = decodeURIComponent(tag || '') === name
+    const selected = href === '/' ? !tag : decodeURIComponent(tag || '') === name
     return (
         <div
-            className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-indigo-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-indigo-600 dark:bg-yellow-600' : ''}`}>
+            className={`whitespace-nowrap mr-2 duration-200 transition-all text-sm px-2 py-0.5 rounded-md text-gray-600 dark:text-gray-300 hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
             <SmartLink href={href}>{name}</SmartLink>
         </div>
     )
