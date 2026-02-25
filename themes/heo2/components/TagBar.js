@@ -51,40 +51,14 @@ const TagMenuItem = ({ href, name }) => {
     const router = useRouter()
     const asPath = router.asPath
     const isOnTagPage = asPath.startsWith('/tag/')
-    const isOnCategoryPage = asPath.startsWith('/category/')
 
-    // 在标签页时保存当前选中的标签
-    if (isOnTagPage && typeof window !== 'undefined') {
-        const currentTag = decodeURIComponent(asPath.replace('/tag/', '').split('/')[0].split('?')[0])
-        sessionStorage.setItem('selectedTag', currentTag)
-    }
-
-    let selected = false
-    if (isOnTagPage) {
-        selected = href === '/'
-            ? false
-            : asPath.startsWith(`/tag/${encodeURIComponent(name)}`)
-    } else {
-        const savedTag = typeof window !== 'undefined' ? sessionStorage.getItem('selectedTag') : null
-        selected = href === '/'
-            ? !savedTag
-            : savedTag === name
-    }
-
-    // "全部"在分类页时不导航（保留分类筛选），只清除标签记忆
-    const handleClick = (e) => {
-        if (href === '/') {
-            sessionStorage.removeItem('selectedTag')
-            if (isOnCategoryPage) {
-                e.preventDefault()
-                router.replace(router.asPath)
-            }
-        }
-    }
+    // 标签页匹配对应标签，其他页面"全部"高亮
+    const selected = href === '/'
+        ? !isOnTagPage
+        : asPath.startsWith(`/tag/${encodeURIComponent(name)}`)
 
     return (
         <div
-            onClick={handleClick}
             className={`whitespace-nowrap mr-2 duration-200 transition-all text-sm font-bold px-2 py-0.5 rounded-md text-gray-600 dark:text-gray-300 hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
             <SmartLink href={href}>{name}</SmartLink>
         </div>

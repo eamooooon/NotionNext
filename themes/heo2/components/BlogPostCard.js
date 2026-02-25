@@ -51,17 +51,18 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         <div className='flex p-5 flex-col justify-between flex-1'>
 
           {/* 分类 + 日期 */}
-          <div className='flex items-center justify-between text-xs mb-2'>
+          <div className='flex items-center justify-between text-xs mb-2 text-gray-700 dark:text-gray-300'>
             {post?.category && (
               <SmartLink
                 passHref
                 href={`/category/${post.category}`}
-                className='font-medium text-blue-600 dark:text-yellow-500 hover:text-blue-800 dark:hover:text-yellow-400 cursor-pointer'>
+                className='flex items-center gap-1 font-medium cursor-pointer hover:text-blue-600 dark:hover:text-yellow-500'>
+                <i className='fa-regular fa-folder-open' />
                 {post.category}
               </SmartLink>
             )}
             {post?.publishDay && (
-              <span className='flex items-center gap-1 text-gray-400 dark:text-gray-500'>
+              <span className='flex items-center gap-1'>
                 <i className='fa-regular fa-clock' />
                 {post.publishDay}
               </span>
@@ -84,12 +85,10 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
             </SmartLink>
           </header>
 
-          {/* 摘要 */}
-          {(!showPreview || showSummary) && (
-            <main className='mt-2 line-clamp-2 replace text-gray-500 dark:text-gray-400 text-xs font-light leading-relaxed'>
-              {post.summary}
-            </main>
-          )}
+          {/* 摘要 - 固定两行高度 */}
+          <main className='mt-2 line-clamp-2 replace text-gray-500 dark:text-gray-400 text-xs font-light leading-relaxed min-h-[2.5rem]'>
+            {post.summary}
+          </main>
 
           {/* 标签 */}
           <div className='mt-3 flex flex-wrap gap-1.5'>
