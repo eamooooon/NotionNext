@@ -18,24 +18,25 @@ import CONFIG from '../config'
 const Hero = props => {
   const HEO_HERO_REVERSE = siteConfig('HEO_HERO_REVERSE', false, CONFIG)
   return (
-    <div
-      id='hero-wrapper'
-      className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
-      <div
-        id='hero'
-        style={{ zIndex: 1 }}
-        className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
-           recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`}>
-        {/* 左侧banner组 */}
-        <BannerGroup {...props} />
+    // <div
+    //   id='hero-wrapper'
+    //   className='recent-top-post-group w-full overflow-hidden select-none px-5 mb-4'>
+    //   <div
+    //     id='hero'
+    //     style={{ zIndex: 1 }}
+    //     className={`${HEO_HERO_REVERSE ? 'xl:flex-row-reverse' : ''}
+    //        recent-post-top rounded-[12px] 2xl:px-5 recent-top-post-group max-w-[86rem] overflow-x-scroll w-full mx-auto flex-row flex-nowrap flex relative`}>
+    //     {/* 左侧banner组 */}
+    //     <BannerGroup {...props} />
 
-        {/* 中间留白 */}
-        <div className='px-1.5 h-full'></div>
+    //     {/* 中间留白 */}
+    //     <div className='px-1.5 h-full'></div>
 
-        {/* 右侧置顶文章组 */}
-        <TopGroup {...props} />
-      </div>
-    </div>
+    //     {/* 右侧置顶文章组 */}
+    //     <TopGroup {...props} />
+    //   </div>
+    // </div>
+    <div />
   )
 }
 
@@ -354,17 +355,15 @@ function TodayCard({ cRef, siteInfo }) {
   return (
     <div
       id='today-card'
-      className={`${
-        isCoverUp ? ' ' : 'pointer-events-none'
-      } overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
+      className={`${isCoverUp ? ' ' : 'pointer-events-none'
+        } overflow-hidden absolute hidden xl:flex flex-1 flex-col h-full top-0 w-full`}>
       <div
         id='card-body'
         onClick={handleCardClick}
-        className={`${
-          isCoverUp
-            ? 'opacity-100 cursor-pointer'
-            : 'opacity-0 transform scale-110 pointer-events-none'
-        } shadow transition-all duration-200 today-card h-full bg-black rounded-xl relative overflow-hidden flex items-end`}>
+        className={`${isCoverUp
+          ? 'opacity-100 cursor-pointer'
+          : 'opacity-0 transform scale-110 pointer-events-none'
+          } shadow transition-all duration-200 today-card h-full bg-black rounded-xl relative overflow-hidden flex items-end`}>
         {/* 卡片文字信息 */}
         <div
           id='today-card-info'
@@ -398,9 +397,8 @@ function TodayCard({ cRef, siteInfo }) {
         <img
           src={siteInfo?.pageCover}
           id='today-card-cover'
-          className={`${
-            isCoverUp ? '' : ' pointer-events-none'
-          } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
+          className={`${isCoverUp ? '' : ' pointer-events-none'
+            } hover:scale-110 duration-1000 object-cover cursor-pointer today-card-cover absolute w-full h-full top-0`}
         />
       </div>
     </div>
