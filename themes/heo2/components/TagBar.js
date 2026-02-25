@@ -51,6 +51,7 @@ const TagMenuItem = ({ href, name }) => {
     const router = useRouter()
     const asPath = router.asPath
     const isOnTagPage = asPath.startsWith('/tag/')
+    const isOnCategoryPage = asPath.startsWith('/category/')
 
     // 在标签页时保存当前选中的标签
     if (isOnTagPage && typeof window !== 'undefined') {
@@ -70,13 +71,20 @@ const TagMenuItem = ({ href, name }) => {
             : savedTag === name
     }
 
+    // "全部"在分类页时不导航（保留分类筛选），只清除标签记忆
+    const handleClick = (e) => {
+        if (href === '/') {
+            sessionStorage.removeItem('selectedTag')
+            if (isOnCategoryPage) {
+                e.preventDefault()
+                router.replace(router.asPath)
+            }
+        }
+    }
+
     return (
         <div
-            onClick={() => {
-                if (href === '/') {
-                    sessionStorage.removeItem('selectedTag')
-                }
-            }}
+            onClick={handleClick}
             className={`whitespace-nowrap mr-2 duration-200 transition-all text-sm font-bold px-2 py-0.5 rounded-md text-gray-600 dark:text-gray-300 hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
             <SmartLink href={href}>{name}</SmartLink>
         </div>

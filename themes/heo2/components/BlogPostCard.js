@@ -20,7 +20,6 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     post?.pageCoverThumbnail &&
     !showPreview
 
-  const POST_TWO_COLS = siteConfig('HEO_HOME_POST_TWO_COLS', true, CONFIG)
   const COVER_HOVER_ENLARGE = siteConfig(
     'HEO_POST_LIST_COVER_HOVER_ENLARGE',
     true,
@@ -32,87 +31,73 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
       className={` ${COVER_HOVER_ENLARGE} ? ' hover:transition-all duration-150' : ''}`}>
       <div
         data-wow-delay='.2s'
-        className={
-          (POST_TWO_COLS ? '2xl:h-[19rem] 2xl:flex-col' : '') +
-          ' wow fadeInUp border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[20rem] md:h-44 md:flex-row  group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'
-        }>
+        className='wow fadeInUp bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col group w-full shadow-md hover:shadow-xl dark:shadow-gray-900 duration-300 transition-all overflow-hidden rounded-2xl'>
+
         {/* 图片封面 */}
         {showPageCover && (
           <SmartLink href={post?.href} passHref legacyBehavior>
-            <div
-              className={
-                (POST_TWO_COLS ? ' 2xl:w-full 2xl:h-44 2xl:flex-shrink-0' : '') +
-                ' w-full md:w-5/12 overflow-hidden cursor-pointer select-none'
-              }>
+            <div className='w-full h-52 overflow-hidden cursor-pointer select-none'>
               <LazyImage
                 priority={index === 0}
                 src={post?.pageCoverThumbnail}
                 alt={post?.title}
-                className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out'
+                className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-90 transition-all duration-500 ease-in-out'
               />
             </div>
           </SmartLink>
         )}
 
         {/* 文字区块 */}
-        <div
-          className={
-            (POST_TWO_COLS ? '2xl:p-3 2xl:flex-1 2xl:w-full' : '') +
-            ' flex p-4  flex-col justify-between h-44 md:h-full w-full md:w-7/12'
-          }>
+        <div className='flex p-5 flex-col justify-between flex-1'>
+
+          {/* 分类 + 日期 */}
+          <div className='flex items-center justify-between text-xs mb-2'>
+            {post?.category && (
+              <SmartLink
+                passHref
+                href={`/category/${post.category}`}
+                className='font-medium text-blue-600 dark:text-yellow-500 hover:text-blue-800 dark:hover:text-yellow-400 cursor-pointer'>
+                {post.category}
+              </SmartLink>
+            )}
+            {post?.publishDay && (
+              <span className='flex items-center gap-1 text-gray-400 dark:text-gray-500'>
+                <i className='fa-regular fa-clock' />
+                {post.publishDay}
+              </span>
+            )}
+          </div>
+
           {/* 标题 */}
           <header>
             <SmartLink
               href={post?.href}
               passHref
-              className={
-                ' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-lg font-extrabold leading-snug'
-              }>
+              className='group-hover:text-blue-600 dark:group-hover:text-yellow-500 text-gray-900 dark:text-gray-100 line-clamp-2 replace cursor-pointer text-base font-bold leading-snug'>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon
                   icon={post.pageIcon}
                   className="heo-icon w-5 h-5 mr-1 align-middle transform translate-y-[-8%]"
                 />
               )}
-              <span className='menu-link '>{post.title}</span>
+              <span className='menu-link'>{post.title}</span>
             </SmartLink>
           </header>
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && (
-            <main className='mt-1.5 line-clamp-2 replace text-gray-700 dark:text-gray-300 text-xs font-light leading-normal'>
+            <main className='mt-2 line-clamp-2 replace text-gray-500 dark:text-gray-400 text-xs font-light leading-relaxed'>
               {post.summary}
             </main>
           )}
 
           {/* 标签 */}
-          <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
-            <div>
-              {' '}
-              {post.tagItems?.map(tag => (
-                <TagItemMini key={tag.name} tag={tag} />
-              ))}
-            </div>
+          <div className='mt-3 flex flex-wrap gap-1.5'>
+            {post.tagItems?.map(tag => (
+              <TagItemMini key={tag.name} tag={tag} />
+            ))}
           </div>
 
-          {/* 日期 + 分类 */}
-          <div className='flex items-center justify-between text-xs text-gray-400 dark:text-gray-500'>
-            {post?.publishDay && (
-              <span className='flex items-center gap-1'>
-                <i className='fa-regular fa-clock' />
-                {post.publishDay}
-              </span>
-            )}
-            {post?.category && (
-              <SmartLink
-                passHref
-                href={`/category/${post.category}`}
-                className='flex items-center gap-1 cursor-pointer hover:text-indigo-700 dark:hover:text-yellow-500'>
-                <i className='fa-regular fa-folder-open' />
-                {post.category}
-              </SmartLink>
-            )}
-          </div>
         </div>
       </div>
     </article>

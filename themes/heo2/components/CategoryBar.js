@@ -56,6 +56,7 @@ const MenuItem = ({ href, name }) => {
   const router = useRouter()
   const asPath = router.asPath
   const isOnCategoryPage = asPath.startsWith('/category/')
+  const isOnTagPage = asPath.startsWith('/tag/')
 
   // 在分类页时保存当前选中的分类
   if (isOnCategoryPage && typeof window !== 'undefined') {
@@ -65,25 +66,30 @@ const MenuItem = ({ href, name }) => {
 
   let selected = false
   if (isOnCategoryPage) {
-    // 在分类页上直接匹配
     selected = href === '/'
       ? false
       : asPath.startsWith(`/category/${encodeURIComponent(name)}`)
   } else {
-    // 不在分类页时，读取记忆的选中分类
     const savedCat = typeof window !== 'undefined' ? sessionStorage.getItem('selectedCategory') : null
     selected = href === '/'
       ? !savedCat
       : savedCat === name
   }
 
+  // "全部"在标签页时不导航（保留标签筛选），只清除分类记忆
+  const handleClick = (e) => {
+    if (href === '/') {
+      sessionStorage.removeItem('selectedCategory')
+      if (isOnTagPage) {
+        e.preventDefault()
+        router.replace(router.asPath)
+      }
+    }
+  }
+
   return (
     <div
-      onClick={() => {
-        if (href === '/') {
-          sessionStorage.removeItem('selectedCategory')
-        }
-      }}
+      onClick={handleClick}
       className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
       <SmartLink href={href}>{name}</SmartLink>
     </div>
