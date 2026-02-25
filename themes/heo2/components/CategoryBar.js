@@ -72,8 +72,12 @@ export default function CategoryBar(props) {
  */
 const MenuItem = ({ href, name }) => {
   const router = useRouter()
-  const { category } = router.query
-  const selected = href === '/' ? !category : category === name
+  const asPath = router.asPath
+  const isOnCategoryPage = asPath.startsWith('/category/')
+  // 在分类页上匹配对应分类；在首页或其他页面（如标签页）时"全部"高亮
+  const selected = href === '/'
+    ? !isOnCategoryPage
+    : asPath.startsWith(`/category/${encodeURIComponent(name)}`)
   return (
     <div
       className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>

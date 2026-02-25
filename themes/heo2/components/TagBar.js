@@ -67,11 +67,14 @@ export default function TagBar(props) {
 
 const TagMenuItem = ({ href, name }) => {
     const router = useRouter()
-    const { tag } = router.query
-    const selected = href === '/' ? !tag : decodeURIComponent(tag || '') === name
+    const asPath = router.asPath
+    const isOnTagPage = asPath.startsWith('/tag/')
+    const selected = href === '/'
+        ? !isOnTagPage
+        : asPath.startsWith(`/tag/${encodeURIComponent(name)}`)
     return (
         <div
-            className={`whitespace-nowrap mr-2 duration-200 transition-all text-sm px-2 py-0.5 rounded-md text-gray-600 dark:text-gray-300 hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
+            className={`whitespace-nowrap mr-2 duration-200 transition-all text-sm font-bold px-2 py-0.5 rounded-md text-gray-600 dark:text-gray-300 hover:text-white hover:bg-blue-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-blue-600 dark:bg-yellow-600' : ''}`}>
             <SmartLink href={href}>{name}</SmartLink>
         </div>
     )

@@ -33,7 +33,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
       <div
         data-wow-delay='.2s'
         className={
-          (POST_TWO_COLS ? '2xl:h-72 2xl:flex-col' : '') +
+          (POST_TWO_COLS ? '2xl:h-[19rem] 2xl:flex-col' : '') +
           ' wow fadeInUp border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[20rem] md:h-44 md:flex-row  group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'
         }>
         {/* 图片封面 */}
@@ -57,7 +57,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         {/* 文字区块 */}
         <div
           className={
-            (POST_TWO_COLS ? '2xl:p-3 2xl:h-32 2xl:w-full' : '') +
+            (POST_TWO_COLS ? '2xl:p-3 2xl:flex-1 2xl:w-full' : '') +
             ' flex p-4  flex-col justify-between h-44 md:h-full w-full md:w-7/12'
           }>
           {/* 标题 */}
