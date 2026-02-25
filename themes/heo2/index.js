@@ -27,6 +27,7 @@ import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import CategoryBar from './components/CategoryBar'
+import TagBar from './components/TagBar'
 import FloatTocButton from './components/FloatTocButton'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -142,6 +143,8 @@ const LayoutIndex = props => {
     <div id='post-outer-wrapper' className='px-5 md:px-0'>
       {/* 文章分类条 */}
       <CategoryBar {...props} />
+      {/* 文章标签条 */}
+      <TagBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
       ) : (
@@ -161,6 +164,8 @@ const LayoutPostList = props => {
     <div id='post-outer-wrapper' className='px-5  md:px-0'>
       {/* 文章分类条 */}
       <CategoryBar {...props} />
+      {/* 文章标签条 */}
+      <TagBar {...props} />
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
         <BlogPostListPage {...props} />
       ) : (

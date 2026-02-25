@@ -41,7 +41,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
           <SmartLink href={post?.href} passHref legacyBehavior>
             <div
               className={
-                (POST_TWO_COLS ? ' 2xl:w-full' : '') +
+                (POST_TWO_COLS ? ' 2xl:w-full 2xl:h-44 2xl:flex-shrink-0' : '') +
                 ' w-full md:w-5/12 overflow-hidden cursor-pointer select-none'
               }>
               <LazyImage
@@ -57,7 +57,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         {/* 文字区块 */}
         <div
           className={
-            (POST_TWO_COLS ? '2xl:p-3 2xl:h-36 2xl:w-full' : '') +
+            (POST_TWO_COLS ? '2xl:p-3 2xl:h-28 2xl:w-full' : '') +
             ' flex p-4  flex-col justify-between h-44 md:h-full w-full md:w-7/12'
           }>
           {/* 标题 */}
