@@ -33,8 +33,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
       <div
         data-wow-delay='.2s'
         className={
-          (POST_TWO_COLS ? '2xl:h-96 2xl:flex-col' : '') +
-          ' wow fadeInUp border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[23rem] md:h-52 md:flex-row  group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'
+          (POST_TWO_COLS ? '2xl:h-72 2xl:flex-col' : '') +
+          ' wow fadeInUp border bg-white dark:bg-[#1e1e1e] flex mb-4 flex-col h-[20rem] md:h-44 md:flex-row  group w-full dark:border-gray-600 hover:border-indigo-600  dark:hover:border-yellow-600 duration-300 transition-colors justify-between overflow-hidden rounded-xl'
         }>
         {/* 图片封面 */}
         {showPageCover && (
@@ -48,7 +48,7 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                 priority={index === 0}
                 src={post?.pageCoverThumbnail}
                 alt={post?.title}
-                className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out' //宽高都调整为自适应,保证封面居中
+                className='h-full w-full object-cover group-hover:scale-105 group-hover:brightness-75 transition-all duration-500 ease-in-out'
               />
             </div>
           </SmartLink>
@@ -57,8 +57,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         {/* 文字区块 */}
         <div
           className={
-            (POST_TWO_COLS ? '2xl:p-4 2xl:h-48 2xl:w-full' : '') +
-            ' flex p-6  flex-col justify-between h-48 md:h-full w-full md:w-7/12'
+            (POST_TWO_COLS ? '2xl:p-3 2xl:h-36 2xl:w-full' : '') +
+            ' flex p-4  flex-col justify-between h-44 md:h-full w-full md:w-7/12'
           }>
           <header>
             {/* 分类 */}
@@ -79,13 +79,13 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
               href={post?.href}
               passHref
               className={
-                ' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'
+                ' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-lg font-extrabold leading-tight'
               }>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon
-                icon={post.pageIcon}
-                className="heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]" // 专门为 Heo 主题的图标设置样式
-              />
+                  icon={post.pageIcon}
+                  className="heo-icon w-5 h-5 mr-1 align-middle transform translate-y-[-8%]"
+                />
               )}
               <span className='menu-link '>{post.title}</span>
             </SmartLink>
@@ -93,10 +93,32 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
 
           {/* 摘要 */}
           {(!showPreview || showSummary) && (
-            <main className='line-clamp-2 replace text-gray-700  dark:text-gray-300 text-sm font-light leading-tight'>
+            <main className='line-clamp-2 replace text-gray-700  dark:text-gray-300 text-xs font-light leading-tight'>
               {post.summary}
             </main>
           )}
+
+          {/* 日期、字数、阅读时间 */}
+          <div className='flex items-center text-xs text-gray-400 dark:text-gray-500 gap-3'>
+            {post?.publishDay && (
+              <span className='flex items-center gap-1'>
+                <i className='fa-regular fa-calendar' />
+                {post.publishDay}
+              </span>
+            )}
+            {post?.wordCount > 0 && (
+              <span className='flex items-center gap-1'>
+                <i className='fa-regular fa-file-word' />
+                {post.wordCount}字
+              </span>
+            )}
+            {post?.readTime > 0 && (
+              <span className='flex items-center gap-1'>
+                <i className='fa-regular fa-clock' />
+                {post.readTime}分钟
+              </span>
+            )}
+          </div>
 
           <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
             <div>
